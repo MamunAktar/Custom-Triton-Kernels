@@ -28,11 +28,20 @@ The wrapper launches enough programs to cover the vector and currently sets `BLO
 - Triton
 - A CUDA-capable NVIDIA GPU and a compatible CUDA/PyTorch/Triton environment
 
-Install PyTorch using the instructions for your CUDA environment at [pytorch.org](https://pytorch.org/get-started/locally/), then install Triton if it is not already available:
+Install PyTorch using the instructions for your CUDA environment at [pytorch.org](https://pytorch.org/get-started/locally/). Install Triton in the same Python environment as PyTorch:
 
 ```bash
+# Linux
 pip install triton
 ```
+
+**Windows:** Upstream Triton currently lists Linux as its supported platform, so the regular `triton` package is not the supported native-Windows installation. For native Windows, use the community-maintained [triton-windows project](https://github.com/triton-lang/triton-windows):
+
+```powershell
+python -m pip install triton-windows
+```
+
+`triton-windows` provides Triton for Windows; it is not the official upstream Windows distribution. Check its installation guide for the current Python, GPU, and PyTorch/Triton version compatibility before installing. Alternatively, use standard Triton inside Linux or WSL. The kernel code imports the `triton` module either way.
 
 ## Run
 
