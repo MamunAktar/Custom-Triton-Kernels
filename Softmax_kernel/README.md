@@ -11,20 +11,14 @@ contiguous CUDA `float32` case exercised by the included test and benchmark.
 
 ## What it computes
 
-For each row $i$ and column $j$, softmax is
+For each row `i` and column `j`, softmax is:
 
-$$
-y_{i,j} = \frac{\exp(x_{i,j})}{\sum_k \exp(x_{i,k})}.
-$$
+`y[i, j] = exp(x[i, j]) / sum_k(exp(x[i, k]))`
 
 The Triton kernel subtracts the maximum value in each row before taking
-exponentials:
+exponentials for numerical stability:
 
-$$
-y_{i,j} =
-\frac{\exp(x_{i,j} - \max_k x_{i,k})}
-{\sum_k \exp(x_{i,k} - \max_k x_{i,k})}.
-$$
+`y[i, j] = exp(x[i, j] - max_k(x[i, k])) / sum_k(exp(x[i, k] - max_k(x[i, k])))`
 
 This max-subtraction is the usual numerically stable form for finite input
 values. Each Triton program handles one or more rows. Columns are padded to
